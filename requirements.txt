@@ -1,0 +1,13 @@
+huggingface_hub
+langchain
+torch
+diffusers
+invisible_watermark
+transformers
+accelerate
+safetensors
+fpdf2
+pillow
+streamlit
+
+# -e .
