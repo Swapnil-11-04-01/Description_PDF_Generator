@@ -7,7 +7,7 @@ transformers
 accelerate
 safetensors
 fpdf2
-pillow
+
 streamlit
 
-# -e .
+-e .
