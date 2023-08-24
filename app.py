@@ -1,3 +1,5 @@
 from DescriptionPdfGenerator.PdfGen import PdfGen
 
-PdfGen("Photosynthesis")
+input = input("Please enter your topic: ")
+pdf = PdfGen(input)
+pdf.generate_pdf()
