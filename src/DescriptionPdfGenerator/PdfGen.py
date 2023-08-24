@@ -1,5 +1,5 @@
 from fpdf import FPDF
-# from DescriptionPdfGenerator.ImgGen import ImgGen
+from DescriptionPdfGenerator.ImgGen import ImgGen
 from DescriptionPdfGenerator.TextGen import TextGen
 import warnings
 
@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore")
 class PdfGen:
     def __init__(self, input):
         textGen = TextGen()
-        self.text = textGen.text_generator(input)
+        self.text, self.translated_description = textGen.text_generator(input)
         # updated_text = f"Image of ({self.text['input'][0] + self.text['Origin'] + self.text['Description'] +self.text['Applications']}) without any text)"
         # imgGen = ImgGen()
         # self.image = imgGen.img_generator(updated_text)
@@ -36,22 +36,27 @@ class PdfGen:
 
         # Calculate the image dimensions while maintaining aspect ratio
         # img_width = 140
-        # img_height = img_height = (img_width / img.size[0]) * img.size[1]
+        # img_height = img_height = (img_width / self.img.size[0]) * self.img.size[1]
 
         # Center the image horizontally
         # pdf.set_x((210 - img_width) / 2)
 
         # Add the image
-        # pdf.image(self.image, x=pdf.get_x(), y=pdf.get_y(), w=img_width, h=img_height)
+        # pdf.image(self.img, x=pdf.get_x(), y=pdf.get_y(), w=img_width, h=img_height)
         # pdf.ln(img_height + 10)  # Move down after image
 
         # Add text with improved styling
-        pdf.set_font("Times", size=15)
+        pdf.set_font("Times", size=10)
         pdf.set_text_color(0, 0, 128)  # Dark blue color
         pdf.multi_cell(
             0,
             8,  # Increased line height
-            f"Origin:\n{self.text['Origin']}\n\nDescription:\n{self.text['Description']}\n\nApplication:\n{self.text['Applications']}",
+            f"Origin:\n{self.text['Origin']}\n\n"+
+            f"Description:\n{self.text['Description']}\n\n"+
+            f"Application:\n{self.text['Applications']}\n\n"+
+            f"Origin in French:\n{self.translated_description['Origin']}\n\n"+
+            f"Description in French:\n{self.translated_description['Description']}\n\n"+
+            f"Application in French:\n{self.translated_description['Applications']}",
             align="L",
         )
 
@@ -66,4 +71,5 @@ class PdfGen:
         pdf.cell(0, 10, "Assignment submitted by - Swapnil Sharma (swapnil.sharma.869.11@gmail.com)", 0, 0, "C")
 
         # Save the PDF to a file
-        pdf.output(f"artifacts/PDFs/{self.text['input'][0]}.pdf")
+        print(self.text)
+        pdf.output(f"artifacts/PDFs{self.text['input']}.pdf")
