@@ -45,4 +45,16 @@ class TextGen:
             )
 
         response = chain({'input': input})
-        return response
+        
+        translate = PromptTemplate(
+            input_variables=['input'],
+            template="Translate ({input}) to French.")
+        
+        translated_response = {}
+        for key in response:
+            translate_chain = LLMChain(llm=self.llm, prompt=translate, output_key=key)
+            translated_response[key] = translate_chain({'input': response[key]})[key]
+        
+        
+        
+        return response, translated_response
